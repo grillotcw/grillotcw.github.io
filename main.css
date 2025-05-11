@@ -1,0 +1,199 @@
+:root {
+   --main: #455c69;;
+   --accent1: #b67ccf;
+   --linkcolor: #cef9f9;
+   --headtxt: "DM Serif Display",serif;
+   --bodytxt: "Maven Pro",sans-serif;
+}
+
+/*Header*/
+header {
+   background-color: #747474;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: 10px;
+   margin: 20px;
+   outline-width: 3px;
+   outline-style: solid;
+   outline-color: #494949;
+}
+
+header a {
+   text-decoration: underline;
+   color: white;
+   font-family: var(--headtxt);
+   font-size: 125%;
+   padding: 5px 10px;
+}
+
+header a:hover {
+   text-decoration: underline;
+   background-color: var(--accent1);
+   border-radius: 2em;
+}
+
+/*main body*/
+body {
+   background-color: var(--main);
+   color: white;
+   font-family: var(--bodytxt);
+   font-size: 120%;
+   line-height: 1.5;
+   margin: 0;
+   padding: 0;
+}
+
+.wrapper {
+   max-width: 60rem;
+   margin: auto;
+}
+
+.lander {
+   padding: 20px;
+}
+
+.intro-text {
+   margin-left: 20px;
+   padding: 15px;
+   background-color: rgba(0, 0, 0, 0.45);
+   width: 50%;
+}
+.intro-text h1 {
+   font-family: var(--headtxt);
+   font-size: 150%;
+   text-decoration: underline;
+   text-underline-offset: 10px;
+}
+.intro-text h2 {
+   font-family: var(--bodytxt);
+   font-size: 120%;
+   margin-bottom: 10px;
+}
+.intro-text p {
+   font-family: var(--bodytxt);
+   font-size: 100%;
+   margin-bottom: 30px;
+   line-height: 1.25;
+}
+.intro-text a {
+   text-decoration: none;
+   font-weight: bolder;
+   color: black;
+   font-family: var(--bodytxt);
+   font-size: large;
+   padding: 8px 10px;
+}
+.intro-text button {
+   background-color: rgba(255, 255, 255, 0.877);
+   font-size: large;
+   padding: 8px 10px;
+   border: 3px solid var(--accent1);
+   border-radius: 2em;
+   transition-duration: 0.4s;
+}
+.intro-text button:hover {
+   background-color: var(--accent1);
+   color: white;
+}
+
+/*portfolio page*/
+/*writings page*/
+#progressbar {
+   --scrollamount: 30%;
+   background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
+   width: var(--scrollamount);
+   height: 8px;
+   position: fixed;
+   top: 0;
+   left: 0;
+   z-index: 9999;
+}
+
+.writingspage {
+   padding: 20px;
+   margin: 20px;
+   background-color: rgba(0, 0, 0, 0.45);
+   border-radius: 10px;
+}
+
+.writingspage h1 {
+   font-family: var(--headtxt);
+   font-size: 120%;
+   border-bottom: 3px solid var(--accent1);
+   margin-bottom: 10px;
+}
+.writingspage a {
+   color: var(--linkcolor);
+}
+.writingspage td {
+   padding: 3px 10px;
+}
+.writingspage th {
+   font-family: var(--headtxt);
+   font-size: 120%;
+   border-bottom: 3px solid var(--accent1);
+   margin-bottom: 10px;
+}
+.writingspage table {
+   margin-bottom: 10px;
+}
+
+.writings {
+   padding: 40px;
+   margin: 20px;
+   background-color: rgba(0, 0, 0, 0.45);
+   border-radius: 10px;
+}
+.writings_header img {
+   float: right;
+}
+.writings_header h1 {
+   font-family: var(--headtxt);
+   font-size: 120%;
+   padding-bottom: 50px;
+}
+.writings_header h2 {
+   border-bottom: 3px solid var(--accent1);
+   margin-bottom: 10px;
+}
+.intext_img {
+   float: right;
+   text-align: left;
+   margin: 10px;
+   max-width: 40%;
+   padding-left: 10px;
+}
+.intext_img img{
+   width: 100%;
+   height: auto;
+   float: right;
+   margin: 10px;
+   display: block;
+}
+.intext_img figcaption {
+   font-size: 80%;
+   text-align: center;
+   color: var(--accent1);
+   font-family: var(--bodytxt);
+}
+.bibliography h1 {
+   font-family: var(--headtxt);
+   font-size: 120%;
+   border-bottom: 3px solid var(--accent1);
+   margin-bottom: 10px;
+}
+.bibliography a {
+   color: var(--linkcolor);
+   font-family: var(--bodytxt);
+   font-size: 100%;
+   padding: 8px 10px;
+}
+
+.bibliography li {
+   list-style-position: outside;
+   padding-left: 1.5em;
+   text-indent: -1.5em;
+   margin-left: 0;
+}
+/*resume page*/
