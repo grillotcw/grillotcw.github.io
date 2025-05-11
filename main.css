@@ -100,8 +100,8 @@ body {
 /*portfolio page*/
 /*writings page*/
 #progressbar {
-   --scrollamount: 30%;
-   background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
+   --scrollamount: 0%;
+   background-image: linear-gradient(90deg, var(--accent1) 0%, #fbc2eb 100%);
    width: var(--scrollamount);
    height: 8px;
    position: fixed;
