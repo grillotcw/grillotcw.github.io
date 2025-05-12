@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Case Grillot</title>
+   <link rel="stylesheet" href="../../reset.css">
+	<link rel="stylesheet" href="../../main.css">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Maven+Pro&family=Taviraj:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <script src="../../js/scrollbar.js"></script>
+   <link rel="stylesheet" href="../../js/highlightjs/styles/tokyo-night-dark.min.css"/>
+   <script src="../../js/highlightjs/highlight.js"></script>
+   <script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+   <div id="progressbar"></div>
+   <div class="wrapper">
+      <header>
+         <div class="left">
+            <a href="../../index.html">Case Grillot</a>
+         </div>
+         <div class="right">
+            <a href="../../portfolio.html">Portfolio</a>
+            <a href="../../writings.html">Writings</a>
+            <a href="../../resume.html">Resum&#233;</a>
+         </div>
+      </header>
+      <div class="writings">
+         <div class="writings_header">
+            <h1>Applying Classifiers to Categorized Rasters</h1>
+            <p class = "abstract">This paper was written for a project in a class titled "Geographic Data Mining/Visualization" and was transformative in the way I think about satellite imagery and machine learning.</p>
+            <h2>November 2, 2023</h2>
+         </div>
+         <div class="bodytext">
+            <h1>Introduction</h1>
+            <p>Categorized rasters are particularly important when analyzing the landscape of a given region. Over time, many different land use classifiers have been generated, such as the National Land Cover Database (NLCD, produced by USGS). Each dataset has a different objective as well as alternative strengths. Moreover, these datasets are created through the complex and minute tweaking of a system of classifiers placed upon the entire nation.</p>
+            <p>While the NLCD, among other land use databases, are particularly strong at their ability to identify a diverse set of classes on a macro, and relatively micro scale, those that wish to study a specific area may find the dataset not perfectly accurate. As such, it is likely that one would seek to generate a classifier uniquely built upon the features of a study area rather than being able to generalize a diverse set of features. To do this one would likely create a training set upon a raster where each pixel is manually classified. These classifiers could then be used on rasters that are not particularly divergent from the original dataset. For example, this uniquely generated classifier trained on a forest would only be able to yield any useful results upon rasters depicting forests, while a raster depicting farmland or deserts would cause the classifier to be almost useless.</p>
+            <p>The goal of this study is to determine whether this aforementioned methodology, when performed using a number of supervised classifiers, is actually able to produce results that could be considered significant or useful in real studies focused upon large scale/local rasters. The five classifiers that will be used in this study are: SVM, Neural Network, Random Forest, AdaBoost, and k-NN. The choice of classifiers allows for a wide range of results to be interpreted and for the best performing ones to be applied to an unclassified raster. This report will use a 63x72 pixel raster of a semi-developed area in Cape Cod, Massachusetts containing nine bands and a manually defined land use class for each pixel. A second dataset, also located in Cape Cod, of the same resolution as the training dataset will be used to predict the land cover.</p>
+            <h1>Methodology</h1>
+            <figure class="intext_img_right">
+               <img src="../img/2023/orangerasterclass/Orange Workflow.png" alt="Orange Workflow">
+               <figcaption><b>Figure 1</b> Orange workflow</figcaption>
+            </figure>
+            <p>The classification was performed in Orange (see figure 1) and the map generation was performed in R using TMap. The training raster came with pre-defined classes upon which the classifiers could be cross validated against (see figure 2). So that the original raster would be classifiable, the etm-80 band was ignored, and the x and y coordinates were set to be meta information. This dataset was then classified using the k-NN, Neural Network, SVM, AdaBoost, and Random Forest classifiers and tested with the original raster via five-fold cross validation. Using the predictions widget, a new dataset with each of the classifiers’ assessment of each pixel was saved and imported to R for the map construction. In R, the dataset was tidied, and a map was created for the manually classified raster. A loop was also used to iterate over the columns representing the classifiers’ predictions to create a map for each classifier. This part was complicated by the fact that not all classifiers assigned all eleven classes (some only assigned ten classes). This was rectified by creating a color vector and nesting an if / else expression within the loop that would drop the first class color if there were only ten levels to the column. The code I used for this is provided at the bottom of the page.</p>
+            <figure class="intext_img_left">
+               <img src="../img/2023/orangerasterclass/tm_raster.png" alt="">
+               <figcaption><b>Figure 2</b> Manually classified raster</figcaption>
+            </figure>
+            <p>The best classifiers will be determined in the results section, but the identification of them was based on not only the visual raster representations, but also the ROC curve and set of confusion matrices. Using the predictions widget, the top three trained classifiers predicted the class of each pixel of the raster depicting a different area. These predictions were then saved and imported into the aforementioned R program to generate another set of maps. A map was also created showing the bands of the raster that was predicted upon as a false color image so that one could identify which classifier best aligned with the ground truth (this is important as we do not have any classes to calculate accuracy with). To create the false color image the etm_30 band corresponded to the red channel, the etm_20 band corresponded to the green channel, and the etm_10 band corresponded to the blue channel. The values for these pixels were skewed, so they were normalized across the range of 0 to 255 using a stretch method to create a brighter image (see figures 3 and 4)</p>
+            <div class="side_img">
+               <figure>
+                  <img src="../img/2023/orangerasterclass/training_false_color.png" alt="">
+                  <figcaption><b>Figure 3</b> False color image of the training raster</figcaption>
+               </figure>
+               <figure>
+                  <img src="../img/2023/orangerasterclass/predict_false_color.png" alt="">
+                  <figcaption><b>Figure 4</b> False color image of the prediction raster</figcaption>
+               </figure>
+               <style>
+               .side_img {
+                  display: flex;
+                  justify-content: space-between;
+                  margin: 0 auto;
+                  width: 80%;
+               }
+               .side_img figure {
+                  width: 48%;
+               }
+               .side_img img {
+                  width: 100%;
+                  height: auto;
+               }
+               .side_img figcaption {
+                  font-size: 80%;
+                  text-align: center;
+                  color: var(--accent1);
+                  font-family: var(--bodytxt);
+               }
+            </style>
+            </div>
+            <h1>Results</h1>
+            <p>The five classifiers all performed similarly well with a classification accuracy (CA) value of around 0.68 or 0.69 (see table 1). Because of this, the CA value is not enough information to determine which classifier outputs the best map. The ideal classifier also depends on the purpose to which it is intended. A classifier whose output is going to be used to create visual maps should have low noise which may result in decreased accuracy, but a classifier whose output will be used purely for statistical tests should be chosen based on the quantitative measurements of accuracy.</p>
+            <p>The ROC Analysis (see figure 5) depicts how different threshold values impact the false positive and true positive rates of the classifiers. Across all different threshold values, the random forest classifier appears to provide the best rate followed closely by the SVM and neural network classifiers. AdaBoost performs moderately worse and k-NN performs the worst of all the classifiers. The top three classifiers ultimately come out to be the random forest, SVM, and neural network classifiers, partly because they are the top three in the ROC Analysis but also because of their confusion matrices and output maps.</p>
+            <figure class="intext_img_left">
+               <img src="../img/2023/orangerasterclass/roc_train.png" alt="">
+               <figcaption><b>Figure 5</b> Classifiers plotted by comparing how their false positive and true positive rates vary with threshold values (<span style = "color:lightgreen">Light Green</span> = Random Forest, <span style = "color:purple">Purple</span> = SVM, <span style = "color:orange">Orange</span> = Neural Network, <span style = "color:pink">Pink</span> = AdaBoost, <span style = "color:turquoise">Turquoise</span> = k-NN)</figcaption>
+            </figure>
+            <p>The majority of pixels are in classes two and three, while the least are in class one. All classifiers follow similar patterns in the confusion matrices, but where certain classifiers deviate from such patterns is where the notability of certain classifiers on this raster comes in to play. The patterns in common with the classifiers are that the majority of pixels are predicted to be in classes two, three, fifteen, and eighteen. Moreover, all classifiers achieve true positive rate of around 60% to 70% for these four main classes, classes which had fewer pixel values, on the other hand, were more likely to be identified at a rate close to randomness.  To start, the three best classifiers all fail to identify the first class when applied to the raster, despite this, of the classifiers that do output a pixel as being in class one, only one actually successfully identifies a pixel correctly, that being AdaBoost (see figure 6).  A class that only appears on one small section of the satellite photo can likely be considered unimportant by a classifier, while still have negligible effects on the overall accuracy. One class that was consistently identified with a high accuracy despite the number of pixels it had was class 20, which if any of the classifier maps are compared to the false color, will result in one seeing that it corresponds to water features. This consistency is logical when one realizes that water has significantly different light reflection properties than the terrestrial surface across many bands of light. In general, the SVM classifier had the lowest level of noise in both its confusion matrix (see figure 6) and map (see figure 7). In general, the reason the random forest classifier was found to have the highest CA value comes from the fact that it did the best job at identifying pixels in smaller classes, such as class 19 and 21, which it outperformed the SVM on (see figure 6). This is also the case for the neural network classifier which did not do as well at identifying large classes but beat the SVM in smaller classes (see figure 6). The k-NN classifier performed the worst in its raw CA value, but this is also exemplified by the confusion matrix where it did the worst at identifying classes which had a large number of pixels in them (see figure 6).</p>
+            <div style = "width: 70%; margin: 0 auto; text-align: center;">
+            <figure style = "margin: 0;">
+               <img src="../img/2023/orangerasterclass/ConfusionMatrices.png" alt="" style="width: 100%; height: auto; display: block; margin: 0 auto;">
+               <figcaption><b>Figure 6</b> Confusion matrices of all classifiers</figcaption>
+            </figure>
+            </div>
+            <p>Ultimately, in combination with the confusion matrices, ROC Analysis, and the map (see figure 7), I determined that the SVM was the best of all the classifiers at classifying the training data. This may come as a surprise as it did have the second lowest CA value (although with a total 0.13 between worst and best scored it can hardly be considered a significant ranking). The map best depicts why SVM is the best model when applied to the training dataset, regardless of its inaccuracies in assigning classes with relatively few pixels. The map generated by the SVM has the lowest noise out of all the maps, resulting in it being relatively clear. Because the SVM does the best job at assigning pixels into classes that make up a majority of the raster, large classes appear to be significantly more continuous (with less noise interrupting it, see figure 7). The aforementioned issue with the SVM being unable to identify small classes well is the most prominent downside visible in the map, and the greatest cause of discrepancies between it and the manually classified raster (for example, class one fully disappears during classification).</p>
+            <p>All the classifiers also suffer a similar problem to the SVM when it comes to distinguishing classes 2 and 18. If one views the false color image of the training raster, they will see that class 2 corresponds to developed areas and class 18 corresponds to highways. Ultimately, however, the differences between these two classes when it comes to their expression as pixels across many bands is not particularly significant, as roadways exist in developed areas and they both bare the signatures of human activity, such as concrete, asphalt, and cut grass. The map generated by the random forest classifier, while technically more accurate than the map output by the SVM, suffers from increased noise, especially within classes 2 and 3 (see figure 8).</p>
+            <p>The map generated by the neural network also has relatively high noise, but one thing it is particularly able to identify are significantly distinct features, such as water or forests (marked by classes 3 and 20 respectively), with relatively little noise (see figure 9).</p>
+            <div class="side_img">
+               <figure>
+                  <img src="../img/2023/orangerasterclass/tm_raster_SVM.png" alt="">
+                  <figcaption><b>Figure 7</b></figcaption>
+               </figure>
+               <figure>
+                  <img src="../img/2023/orangerasterclass/tm_raster_Random.Forest.png" alt="">
+                  <figcaption><b>Figure 8</b></figcaption>
+               </figure>
+               <figure>
+                  <img src="../img/2023/orangerasterclass/tm_raster_Neural.Network.png" alt="">
+                  <figcaption><b>Figure 9</b></figcaption>
+            </div>
+            <p>To compare the SVM classifier against the ground truth within a single image is important to understand how significantly it varies from the original map (see figure 10). To test this a map was created in R based on a Boolean vector of pixels that returned a “true” value if the pixel classes matched, and a “false” value if the pixel classes were different. Based on this map, and by comparing it to the original land use raster (see figure 2), one can see that along the margins of contiguous class areas, the number of incorrect classifications is greatest.</p>
+            <figure class="intext_img_right">
+               <img src="../img/2023/orangerasterclass/tm_comparison.png" alt="">
+               <figcaption><b>Figure 10</b></figcaption>
+            </figure>
+            <p>Following this, the three best classifiers (SVM, random forest, and neural network) assigned class values to a raster of the same size but in a different location on Cape Cod. In this dataset there were no pre-assigned classes, meaning that one would be unable to calculate CA values, confusion matrices, or an ROC chart. Instead, one will have to use intuition and the false-color image of the raster to identify which classifier performed best (see figure 11).</p>
+            <figure class="intext_img_left">
+               <img src="../img/2023/orangerasterclass/label_predict.png" alt="">
+               <figcaption><b>Figure 11</b> Labeled false color map of the raster that was predicted upon</figcaption>
+            </figure>
+            <p>Based on the knowledge of what certain classes correspond to from the training dataset (class 2 = developed, class 3 = forest, class 18 = highways, class 20 = water), one should be able to identify certain features that the classifiers fail to or succeed at classifying. The prediction maps by the three best classifiers are provided in figures 12, 13, and 14. In general, these maps were far noisier and not as great at classification as they were when being applied to the training data. In fact, many of the classifiers failed to identify many of the visually identifiable features pointed out in figure 11.</p>
+            <div class="side_img">
+               <figure>
+                  <img src="../img/2023/orangerasterclass/tm_predict_raster_SVM.png" alt="">
+                  <figcaption><b>Figure 12</b></figcaption>
+               </figure>
+               <figure>
+                  <img src="../img/2023/orangerasterclass/tm_predict_raster_Random.Forest.png" alt="">
+                  <figcaption><b>Figure 13</b></figcaption>
+               </figure>
+               <figure>
+                  <img src="../img/2023/orangerasterclass/tm_predict_raster_Neural.Network.png" alt="">
+                  <figcaption><b>Figure 14</b></figcaption>
+            </div>
+            <p>One feature that all the classifiers identified poorly is the highway and concomitant interchange towards the bottom of the raster. While they did all identify a thin line of pixels as class 18, the area they identified as class 2 around class 18, should have also been classified as class 18. The next major difference in how the classifiers predicted classes can be viewed with the lake at the center of the raster. The neural network did the best at identifying the lake, with almost no noise in the contiguous area. The SVM only identified a part of the lake, while the random forest classifier only identified the edges. The reason I suspect the SVM and random forest classifiers did a poor job at identifying the unique water feature is because the water section that they were trained on was a small edge to a lake, not a raster with an entire lake inside them.</p>
+            <p>Ultimately, the neural network did the best job at adapting to the new circumstances of the raster. This points to an interesting contradiction in the application of these classifiers to different datasets. If there exists some prior classification that can be used (even if at a scale over 15x15 meters) the SVM would likely be able to out-perform the neural network in generating a raster usable at a smaller scale. A future study utilizing an NLCD dataset with an SVM classifier to create an upscaled raster would potentially yield promising results. The neural network, however, finds itself particularly felicitous at being applied to different places under the same context. The random forest classifier appears to be the poorest when applied to the raster as it has the highest amount of noise, which implies a certain degree of randomness when it comes to the prediction of individual pixels.</p>
+            <h1>Conclusion</h1>
+            <p>It is of great importance to select a classifier that provides the best output for the desired use case. The five classifiers used in this study all had particular positives and negatives associated with them and subsequently performed differently on the data they were fed. Moreover, certain classifiers such as the neural network are far better at using prior information to inform predictions in new situations. The degree to which this adaptability exists would be a useful study to undertake. For example, in the lens of land cover it would be interesting to see how a neural network classifier would do when applied to fully urban or lacustrine settings, even if only a small segment of the training material had such features.</p>
+            <p>It should also be noted that the best performing classifier in terms of pure CA values or as can be analyzed in the ROC chart does not necessarily imply that the model is the best for how it may be applied. Because one of the goals of this study was to generate land cover maps, the SVM found itself the best model as it produced maps with far less noise than its counterparts. The classifiers used for this analysis may differ significantly in capability or accuracy when applied to a completely different raster and as such studying these different models as applied to settings as disparate as deserts or rainforests would provide valuable information in determining how to select an ideal classifier. Ultimately, many factors must be considered when applying a classifier to a set of data resulting in it being just as much an art as a science.</p>
+            <h1>Code</h1>
+         </div>
+         <div class="codeblock">
+            <pre>
+               <code>
+#Load Libraries
+library(raster)
+library(tidyverse)
+library(tmap)
+library(glue)
+library(terra)
+
+#Load Training Data
+capecodtrain <- read.table(path_to_file)
+
+#Tidy Data
+colnames(capecodtrain) <- as.character(capecodtrain[1,])
+capecodtrain <- capecodtrain[-c(1:3),]
+capecodraster <- capecodtrain[,c(10:12)]
+capecodraster <- capecodraster %>% relocate(1, .after = last_col())
+raster <- rasterFromXYZ(capecodraster)
+plot(raster)
+
+#Load Classified Data from Orange
+capecodclassified <- read.csv(path_to_file)
+
+#Tidy data
+capecodclassified <- capecodclassified[-c(1,2),-c(9:72)]
+capecodclassified <- capecodclassified %>% relocate(1, .after = last_col())
+
+#Color Vector
+colors <- c("#FFFF00","#FF0000","#01FF00","#5555FF","#FFAA55","#00AA00","#FF7F7F","#000000","#664422","#0000FF","#AA5500")
+
+#Empty lists to populate
+rastlist <- list()
+maplist <- list()
+predict_rastlist <- list()
+predict_maplist <- list()
+
+#Create list of rasters for each classification method
+for (i in c(3:7)) {
+  rasterclass <- rasterFromXYZ(capecodclassified[,c(1:2,i)])
+  rastlist[[length(rastlist) + 1]] = assign(paste("raster", colnames(capecodclassified)[i], sep = ""), rasterclass)
+  if(nlevels(as.factor(capecodclassified[,i]))==11) {
+    maps <- tm_shape(rastlist[[i-2]]) +
+      tm_raster(style = "cat", palette = colors, title = "Class") +
+      tm_layout(legend.outside = T, main.title = glue("Cape Cod Classifications Trained with the \n{names(rastlist[[i-2]])} Classifier"))
+    maplist[[length(maplist) + 1]] = assign(paste("raster", colnames(capecodclassified)[i], sep = ""), maps)
+  }
+  else {
+    maps <- tm_shape(rastlist[[i-2]]) +
+      tm_raster(style = "cat", palette = colors[-1], title = "Class") +
+      tm_layout(legend.outside = T, main.title = glue("Cape Cod Classifications Trained with the \n{names(rastlist[[i-2]])} Classifier"))
+    maplist[[length(maplist) + 1]] = assign(paste("raster", colnames(capecodclassified)[i], sep = ""), maps)
+  }
+  tmap_save(maplist[[i-2]], height = 4, width = 6, dpi = 300, filename = glue("tm_raster_{names(rastlist[[i-2]])}.png"))
+}
+rm(rasterclass)
+
+#Create main raster image
+tm_raster <- tm_shape(raster) +
+  tm_raster(style = "cat", palette = colors, title = "Class") +
+  tm_layout(legend.outside = T, main.title = "Cape Cod Training Classifications")
+tm_raster
+tmap_save(tm_raster, height = 4, width = 6, dpi = 300, filename = "tm_raster.png")
+
+#prediction rasters
+predictions <- read.csv("C:\\Users\\Case\\Desktop\\School\\2023-Fall\\GEOG 5198\\Project 4\\predictMap.csv")
+predictions <- predictions[-c(1,2),]
+
+#prediction maps
+for (i in c(3:5)) {
+  predict_rasterclass <- rasterFromXYZ(predictions[,c(1:2,i)])
+  predict_rastlist[[length(predict_rastlist) + 1]] = assign(paste("raster", colnames(predictions)[i], sep = ""), predict_rasterclass)
+  if(nlevels(as.factor(predictions[,i]))==10) {
+    predict_maps <- tm_shape(predict_rastlist[[i-2]]) +
+      tm_raster(style = "cat", palette = colors[-1], title = "Class") +
+      tm_layout(legend.outside = T, main.title = glue("Cape Cod Classifications Predicted with \nthe {names(predict_rastlist[[i-2]])} Classifier"))
+    predict_maplist[[length(predict_maplist) + 1]] = assign(paste("raster", colnames(predictions)[i], sep = ""), predict_maps)
+  }
+  else {
+    predict_maps <- tm_shape(predict_rastlist[[i-2]]) +
+      tm_raster(style = "cat", palette = colors[-c(1,9)], title = "Class") +
+      tm_layout(legend.outside = T, main.title = glue("Cape Cod Classifications Predicted with \nthe {names(predict_rastlist[[i-2]])} Classifier"))
+    predict_maplist[[length(predict_maplist) + 1]] = assign(paste("raster", colnames(predictions)[i], sep = ""), predict_maps)
+  }
+  tmap_save(predict_maplist[[i-2]], height = 4, width = 6, dpi = 300, filename = glue("tm_predict_raster_{names(predict_rastlist[[i-2]])}.png"))
+}
+
+
+#Create false-color map
+predict_raster <- rasterFromXYZ(predictions)
+plotRGB(predict_raster, r = 6, g = 5, b = 4, stretch = "lin")
+
+capecodbands <- capecodtrain %>% select(c(xoord, ycoord), everything())
+rasterbands <- rasterFromXYZ(capecodbands)
+plotRGB(rasterbands, r = 3, g = 2, b = 1, stretch = "hist")
+
+#SVM vs Truth Map
+capecodclassified$xoord <- as.integer(capecodclassified$xoord)
+capecodclassified$ycoord <- as.integer(capecodclassified$ycoord)
+capecodraster$xoord <- as.integer(capecodraster$xoord)
+capecodraster$ycoord <- as.integer(capecodraster$ycoord)
+
+comparison_raster <- merge(capecodraster, capecodclassified, by = c("xoord", "ycoord"))
+comparison_raster$svm_truth <- comparison_raster[,3] == comparison_raster[,6]
+comparison_raster <- comparison_raster[,-c(3:9)]
+comparison <- rasterFromXYZ(comparison_raster)
+comparison_truth <- summary(comparison_raster$svm_truth)
+
+tm_comparison <- tm_shape(comparison) +
+  tm_raster(style = "cat", palette = c("#696E6E","#A2BA8C"), title = "Legend", labels = c("Different Classes","Same Classes")) +
+  tm_layout(legend.outside = T, main.title = "Raster Depicting Where SVM \nand Manual Classifications Match") +
+  tm_credits(glue("{round((as.numeric(comparison_truth[3])/count(comparison_raster))*100, 2)} % of Pixels were Matched Correctly"), bg.color = "#ffffff", bg.alpha = 0.5)
+tm_comparison
+tmap_save(tm_comparison, height = 4, width = 6, dpi = 300, filename = "tm_comparison.png")
+            </code>
+         </pre>
+         </div>
+      </div>
+   </div>
+</body>
+</html>

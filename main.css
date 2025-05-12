@@ -116,7 +116,6 @@ body {
    background-color: rgba(0, 0, 0, 0.45);
    border-radius: 10px;
 }
-
 .writingspage h1 {
    font-family: var(--headtxt);
    font-size: 120%;
@@ -145,33 +144,62 @@ body {
    background-color: rgba(0, 0, 0, 0.45);
    border-radius: 10px;
 }
+.abstract {
+   font-size: 70%;
+   font-style: italic;
+}
 .writings_header img {
    float: right;
+   margin-left: 5px;
 }
 .writings_header h1 {
    font-family: var(--headtxt);
    font-size: 120%;
-   padding-bottom: 50px;
+   padding-bottom: 20px;
 }
 .writings_header h2 {
    border-bottom: 3px solid var(--accent1);
+   border-bottom-width: 10px;
    margin-bottom: 10px;
 }
-.intext_img {
+
+.bodytext h1{
+   font-family: var(--headtxt);
+   font-size: 100%;
+   text-decoration: underline;
+   text-decoration-color: var(--accent1);
+   text-underline-offset: 3px;
+   text-decoration-thickness: 0.09em;
+}
+.intext_img_right {
    float: right;
    text-align: left;
    margin: 10px;
    max-width: 40%;
    padding-left: 10px;
 }
-.intext_img img{
+.intext_img_left {
+   float: left;
+   text-align: left;
+   margin: 10px;
+   max-width: 40%;
+   padding-right: 15px;
+}
+.intext_img_right img{
    width: 100%;
    height: auto;
    float: right;
    margin: 10px;
    display: block;
 }
-.intext_img figcaption {
+.intext_img_left img{
+   width: 100%;
+   height: auto;
+   float: left;
+   margin: 10px;
+   display: block;
+}
+figcaption {
    font-size: 80%;
    text-align: center;
    color: var(--accent1);
@@ -195,5 +223,14 @@ body {
    padding-left: 1.5em;
    text-indent: -1.5em;
    margin-left: 0;
+}
+
+.hljs {
+   font-size: 0.75em;
+}
+.codeblock pre {
+   height: 300px;
+   overflow: auto;
+   margin-top: 10px;
 }
 /*resume page*/
