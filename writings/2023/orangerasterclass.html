@@ -83,6 +83,38 @@
             </div>
             <h1>Results</h1>
             <p>The five classifiers all performed similarly well with a classification accuracy (CA) value of around 0.68 or 0.69 (see table 1). Because of this, the CA value is not enough information to determine which classifier outputs the best map. The ideal classifier also depends on the purpose to which it is intended. A classifier whose output is going to be used to create visual maps should have low noise which may result in decreased accuracy, but a classifier whose output will be used purely for statistical tests should be chosen based on the quantitative measurements of accuracy.</p>
+            <div class = "writingstable">
+               <div class = "tablewrapper">
+                  <table>
+                     <h1>Table 1</h1>
+                     <caption>Classification Accuracy of the five classfiers using cross-validation</caption>
+                     <tr>
+                        <th>Classifier</th>
+                        <th>Classification Accuracy</th>
+                     </tr>
+                     <tr>
+                        <td>k-NN</td>
+                        <td>0.680</td>
+                     </tr>
+                     <tr>
+                        <td>Neural Network</td>
+                        <td>0.693</td>
+                     </tr>
+                     <tr>
+                        <td>SVM</td>
+                        <td>0.687</td>
+                     </tr>
+                     <tr>
+                        <td>AdaBoost</td>
+                        <td>0.691</td>
+                     </tr>
+                     <tr>
+                        <td>Random Forest</td>
+                        <td>0.692</td>
+                     </tr>
+                  </table>
+               </div>
+            </div>
             <p>The ROC Analysis (see figure 5) depicts how different threshold values impact the false positive and true positive rates of the classifiers. Across all different threshold values, the random forest classifier appears to provide the best rate followed closely by the SVM and neural network classifiers. AdaBoost performs moderately worse and k-NN performs the worst of all the classifiers. The top three classifiers ultimately come out to be the random forest, SVM, and neural network classifiers, partly because they are the top three in the ROC Analysis but also because of their confusion matrices and output maps.</p>
             <figure class="intext_img_left">
                <img src="../img/2023/orangerasterclass/roc_train.png" alt="">

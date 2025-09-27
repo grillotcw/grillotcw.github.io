@@ -21,6 +21,7 @@ header {
 
 header a {
    text-decoration: underline;
+   text-underline-offset: 4px;
    color: white;
    font-family: var(--headtxt);
    font-size: 125%;
@@ -33,6 +34,7 @@ header a:hover {
    border-radius: 2em;
 }
 
+/*index page features*/
 /*main body*/
 body {
    background-color: var(--main);
@@ -45,7 +47,7 @@ body {
 }
 
 .wrapper {
-   max-width: 60rem;
+   max-width: 90rem;
    margin: auto;
 }
 
@@ -61,7 +63,7 @@ body {
 }
 .intro-text h1 {
    font-family: var(--headtxt);
-   font-size: 150%;
+   font-size: 180%;
    text-decoration: underline;
    text-underline-offset: 10px;
 }
@@ -97,6 +99,223 @@ body {
    color: white;
 }
 
+/*featured seciton*/
+.featured {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   margin: 20px;
+   padding: 20px;
+   background-color: rgba(0, 0, 0, 0.45);
+   border-radius: 10px;
+   min-height: 650px; /* or whatever height works best */
+}
+
+.featured h1 {
+   text-align: center;
+   font-family: var(--headtxt);
+   font-size: 250%;
+   padding-bottom: 20px;
+}
+.featured h2 {
+   font-family: var(--headtxt);
+   font-size: 200%;
+   padding-bottom: 5px;
+}
+.featured h3 {
+   font-family: var(--bodytxt);
+   font-size: 115%;
+   font-style: italic;
+   padding-bottom: 5px;
+   border-bottom: 3px solid var(--accent1);
+}
+.featured p {
+   font-family: var(--bodytxt);
+   padding-top: 10px;
+}
+.featured a {
+   color: var(--linkcolor);
+}
+
+.featured-body {
+   display: flex;
+   flex-direction: column;
+   flex-grow: 1;
+   justify-content: space-between;
+}
+
+.mySlides {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+}
+
+
+
+.highlight-container {
+   flex-grow: 1;
+   display: grid;
+   grid-template-columns: repeat(2, 1fr);
+   gap: 10px;
+   justify-content: center;
+   align-items: start;
+}
+.numberclass {
+   color: white;
+   font-size: 12px;
+   padding: 0px 0px;
+   position: absolute;
+   top: 0;
+}
+.highlight-left {
+   grid-column: 1 / 2;
+}
+.highlight-right {
+   grid-column: 2 / 2;
+}
+.highlight-image {
+   height: auto;
+   width: 100%;
+   object-fit: cover;
+}
+.more-button {
+   text-align: center;
+   padding-top: 10px;
+}
+.more-button a {
+   text-decoration: none;
+   font-weight: bolder;
+   color: black;
+   font-family: var(--bodytxt);
+   font-size: large;
+   padding: 8px 10px;
+}
+.more-button button {
+   background-color: rgba(255, 255, 255, 0.877);
+   font-size: large;
+   padding: 8px 10px;
+   border: 3px solid var(--accent1);
+   border-radius: 2em;
+   transition-duration: 0.4s;
+}
+.more-button button:hover {
+   background-color: var(--accent1);
+   color: white;
+}
+
+.numberclass {
+   margin-bottom: 10px;
+}
+
+/* Slideshow container */
+.slideshow-container {
+  position: relative;
+  margin: auto;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 6px;
+  user-select: none;
+  background-color: white;
+  border: 3px solid var(--accent1);
+  text-decoration: none;
+  color: black !important;  /* force black */
+  top: 100%;
+}
+
+/* Ensure all link states are black */
+.prev:link, .prev:visited, .prev:hover, .prev:active,
+.next:link, .next:visited, .next:hover, .next:active {
+  color: black !important;
+}
+.arrows a {
+   text-decoration: none;
+   color: black;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 6px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: var(--accent1);
+}
+
+.bottom-controls {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: 20px;
+   width: 100%;
+   box-sizing: border-box;
+   gap: 20px;
+}
+
+.bottom-controls .prev,
+.bottom-controls .next {
+   position: static;
+   margin: 0;
+}
+
+.bottom-controls .more-button {
+   flex-grow: 1;
+   text-align: center;
+}
+
+
+
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+  .prev, .next,.text {font-size: 11px}
+}
+@media (max-width: 768px) {
+  .highlight-container {
+    grid-template-columns: 1fr; /* stack text above image on mobile */
+  }
+  .highlight-right {
+    grid-column: 1; /* reset positioning */
+  }
+}
 /*portfolio page*/
 /*writings page*/
 #progressbar {
@@ -171,6 +390,10 @@ body {
    text-underline-offset: 3px;
    text-decoration-thickness: 0.09em;
 }
+
+.bodytext a {
+   color: var(--linkcolor);
+}
 .intext_img_right {
    float: right;
    text-align: left;
@@ -225,6 +448,52 @@ figcaption {
    margin-left: 0;
 }
 
+.writingstable {
+   margin: 10px auto;
+   padding: 20px;
+   background-color: rgba(0, 0, 0, 0.45);
+   border-radius: 10px;
+   width: 100%;
+   max-width: 500px;
+   overflow-x: auto;
+   box-sizing: border-box;
+}
+.table-wrapper {
+  overflow-x: auto;
+  width: 100%;
+}
+.writingstable table {
+   width: 100%;
+   border-collapse: collapse;
+   margin: 0 auto;
+   min-width: 200px
+}
+.writingstable caption {
+   font-family: var(--bodytxt);
+   color: var(--accent1);
+   font-size: 90%;
+}
+
+.writingstable tr {
+   border-bottom: 1px solid var(--accent1);
+}
+.writingstable th {
+   font-family: var(--bodytxt);
+   font-size: 120%;
+   text-align: left;
+   padding: 5px 10px;
+}
+.writingstable td {
+   padding: 5px 10px;
+   font-family: var(--bodytxt);
+   font-size: 90%;
+}
+.writingtable tr:nth-child(odd) {
+   background-color: rgba(0, 0, 0, 0.25);
+}
+.writingstable tr:nth-child(even) {
+   background-color: rgba(0, 0, 0, 0.45);
+}
 .hljs {
    font-size: 0.75em;
 }

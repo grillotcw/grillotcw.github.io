@@ -10,6 +10,7 @@
    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Maven+Pro&family=Taviraj:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <style>.slides {display: 0;}</style>
 </head>
 <body>
    <div class="wrapper">
@@ -27,21 +28,82 @@
          <div class="intro-text">
             <h1>Case Grillot</h1>
             <h2>GIS | Remote Sensing | Geosciences</h2>
-            <p>I am based in Cincinnati/Northern Kentucky and specialize in all things spatial. I am interested in many facets of landscapes, geography, mapping, and surface processes. I also love bikepacking and post my trips here.</p>
+            <p>I am from Kentucky and specialize in all things spatial. My interests lie in many facets of landscapes, geography, mapping, and surface processes. I also love bikepacking and post my trips here.</p>
             <button><a href="mailto:cwgrillot@gmail.com">Get in Contact!</a></button>
          </div>
       </div>
       <div class="content">
          <div class="featured">
-
-         </div>
-         <div class="recent-proj">
-
-         </div>
-         <div class="recent-writing">
-
+            <h1>Featured Projects</h1>
+            <div class="highlight-body">
+               <div class="slideshow-container">
+                  <div class="mySlides fade">
+                     <div class="highlight-container">
+                        <div class="highlight-left">
+                           <h2>Uptown Intersection Safety Survey</h2>
+                           <h3>Maps and Charts I Produced to highligh percieved intersection safety in Uptown Cincinnati around the UC Campus</h3>
+                           <p>After a fellow group member accidentally shared our survey to an e-mail list with over 10,000 recipients, we gained a much greater level of participation than we had anticipated. To capitalize on this <em>statistically signficant</em> response, we created a number of charts, maps, and rankings to exhaustively illustrate the intersections percieved with the most danger in Uptown. We blended together both hard data on the intersection's attributes and people's personal experiences with them to return a list of action items and design recommendations.</p>
+                        </div>
+                        <div class="highlight-right">
+                           <img class = "highlight-image" src="projects/imgs/featuredtab/nky_cincy_landslide_risk.png" alt="" width = 100%>
+                        </div>
+                     </div>
+                     <div class="bottom-controls">
+                        <a class="prev" onclick="plusSlides(-1)">❮</a>
+                        <div class="more-button">
+                           <button>
+                              <a href="projects/imgs/featuredtab/nky_cincy_landslide_risk.png">More about the Safety Survey</a>
+                           </button>
+                        </div>
+                        <a class="next" onclick="plusSlides(1)">❯</a>
+                     </div>
+                  </div>
+                  <div class="mySlides fade">
+                     <div class="highlight-container">
+                        <div class="highlight-left">
+                           <h2>Landslide Risk in Kentucky</h2>
+                           <h3>Landslide Risk Maps I Created for the Northern and Eastern Regions of Kentucky using Logistic Regression</h3>
+                           <p>In 2025 I witnessed a landslide in real-time following two and half days of continuous rainfall. Since then, I have considered landslides to be a consistent object of interest. I integrated this interest into a project for my <em>Spatial Statistics 2</em> class by using an <a href="https://uknowledge.uky.edu/kgs_data/7/">inventory of landslides</a> provided by the Kentucky Geological Survey to estimate landslide risk across Kentucky using logistic regression of variables derived from the terrain. During this project I gained a number of skills working with DEMs, R for regression and rasters, and Principal Component Analyses.</p>
+                        </div>
+                        <div class="highlight-right">
+                           <img class = "highlight-image" src="projects/imgs/featuredtab/nky_cincy_landslide_risk.png" alt="" width = 100%>
+                        </div>
+                     </div>
+                     <div class="bottom-controls">
+                        <a class="prev" onclick="plusSlides(-1)">❮</a>
+                        <div class="more-button">
+                           <button>
+                              <a href="projects/imgs/featuredtab/nky_cincy_landslide_risk.png">More about the Safety Survey</a>
+                           </button>
+                        </div>
+                        <a class="next" onclick="plusSlides(1)">❯</a>
+                     </div>
+                  </div>
+                  <div class="mySlides fade">
+                     <div class="highlight-container">
+                        <div class="highlight-left">
+                           <h2>Land Subsidence Interpolation</h2>
+                           <h3>Estimation of Land Subsidence within California's Central Valley using Various Interpolation Algorithms</h3>
+                           <p>The goal of this project was to manually implement GIS interpolation algorithms such as Kriging or IDW as part of my <em>Advanced GIS</em> class. I applied these goals in the hopes of creating a continuous map of subsidence across California's southern Central Valley. Using rasterio in Python, these interpolation grids were then plotted against irrigated land segmented with Normalized Difference Moisture Index values.</p>
+                        </div>
+                        <div class="highlight-right">
+                           <img src="projects/imgs/featuredtab/nky_cincy_landslide_risk.png" alt="" width = 100%>
+                        </div>
+                     </div>
+                     <div class="bottom-controls">
+                        <a class="prev" onclick="plusSlides(-1)">❮</a>
+                        <div class="more-button">
+                           <button>
+                              <a href="projects/imgs/featuredtab/nky_cincy_landslide_risk.png">More about the Safety Survey</a>
+                           </button>
+                        </div>
+                        <a class="next" onclick="plusSlides(1)">❯</a>
+                  </div>
+               </div>
+            </div>
          </div>
       </div>
    </div>
 </body>
 </html>
+<script src="js/slides.js"></script>
