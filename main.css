@@ -5,6 +5,7 @@
    --headtxt: "DM Serif Display",serif;
    --bodytxt: "Maven Pro",sans-serif;
 }
+.slides {display: 0;}
 
 /*Header*/
 header {
